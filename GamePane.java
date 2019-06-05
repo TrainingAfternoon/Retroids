@@ -20,7 +20,7 @@ class GamePane extends JPanel implements KeyListener {
         super();
         setBackground(new Color(0,0,0));
         this.windowDimensions = windowDimensions;
-        scoreboard = new ScoreBoard(10,10);
+        scoreboard = new ScoreBoard(5,10);
         ships = new ArrayList<GameObject>() {{
             Random random = new Random();
             int height = (int) windowDimensions.getHeight();
