@@ -13,7 +13,6 @@ class PlayerShip extends GameObject {
     public void paint(Graphics2D g2D) {
         shape = constructShape();
         g2D.rotate(Math.toRadians(rotation),x,y);
-        g2D.draw(hitbox);
         g2D.draw(shape);
     }
     @Override
