@@ -8,6 +8,7 @@ import java.awt.Dimension;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 import java.lang.Math;
+import java.util.ConcurrentModificationException;
 class GamePane extends JPanel implements KeyListener {
     private Dimension windowDimensions;
     static ArrayList<ArrayList<GameObject>> gameObjects;
@@ -50,27 +51,31 @@ class GamePane extends JPanel implements KeyListener {
         super.paintComponent(g);
         g.setColor(Color.GREEN);
         scoreboard.paint(g);
-        for(GameObject asteroid : asteroids) {
-            for(GameObject bullet : bullets) {
-                if(bullet.hitbox.intersects(asteroid.hitbox)) {
-                    scoreboard.updateScore(asteroid.size.getPoints());
-                    if(asteroid.size != Size.SMALL) {
-                        Size newSize = (asteroid.size == Size.LARGE) ? Size.MEDIUM : Size.SMALL;
-                        int numCreated = random.nextInt(1)+2;
-                        for(int i = 0; i < numCreated; i++) {
-                            asteroids.add(new Asteroid(asteroid.x,asteroid.y,newSize));
+        try {
+            for(GameObject asteroid : asteroids) {
+                for(GameObject bullet : bullets) {
+                    if(bullet.hitbox.intersects(asteroid.hitbox)) {
+                        scoreboard.updateScore(asteroid.size.getPoints());
+                        if(asteroid.size != Size.SMALL) {
+                            Size newSize = (asteroid.size == Size.LARGE) ? Size.MEDIUM : Size.SMALL;
+                            int numCreated = random.nextInt(1)+2;
+                            for(int i = 0; i < numCreated; i++) {
+                                asteroids.add(new Asteroid(asteroid.x,asteroid.y,newSize));
+                            }
+                            asteroids.remove(asteroid);
+                        } else {
+                            asteroids.remove(asteroid);
                         }
-                        asteroids.remove(asteroid);
-                    } else {
-                        asteroids.remove(asteroid);
+                        bullets.remove(bullet);
                     }
-                    bullets.remove(bullet);
                 }
-            }
-            if(asteroid.hitbox.intersects(playerShip.hitbox)) {
-                ships.remove(playerShip);
-                System.exit(0);
-            }
+                if(asteroid.hitbox.intersects(playerShip.hitbox)) {
+                    ships.remove(playerShip);
+                    System.exit(0);
+                }
+            } 
+        } catch(ConcurrentModificationException cme) {
+            
         }
         for (GameObject ship : ships) {
             if(ship instanceof AlienShip) {
