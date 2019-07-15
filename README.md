@@ -1,6 +1,6 @@
 # Retroids
-A beginner's recreation of Atari's 1979 game Asteroids, using Java.
+A beginner's basic recreation of Atari's 1979 game Asteroids, using Java.
 
-An extremely basic, loose recreation of Atari's **Asteroids** written in Java for a school project.
+Written with the intent to implement and practice OOP and clean code principles.
 
-It is currently in the process of being converted from a single threaded program to a multithreaded program.
+The program is complete at an MVP level. Current WIPs include adding documentation and implementing multiple threads.
