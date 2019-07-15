@@ -1,6 +1,6 @@
 import java.util.Random;
 import java.util.Arrays;
-public enum Vector {
+enum Vector {
     NORTH(0,-1),
     NORTHEAST(1,-1),
     EAST(1,0),
